@@ -4,6 +4,9 @@
 
 A C# command-line application for anonymizing DICOM (Digital Imaging and Communications in Medicine) files. Designed with Clean Architecture principles for maintainability, testability, and extensibility.
 
+By: 
+[Koray Elbek](https://www.linkedin.com/in/korayelbek/)
+
 ## Table of Contents
 
 -   [Introduction](#introduction)
