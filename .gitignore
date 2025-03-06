@@ -1,0 +1,79 @@
+# Compiled Object Code:
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# User Specific Files:
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build Results:
+*.dll
+*.exe
+*.pdb
+*.nupkg
+*.nuspec
+
+# Visual Studio Temporary Files:
+_ReSharper*/
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.vssscc
+*.vsmdi
+*.vspscc
+*.vsdps
+*.sqproj
+*.shproj
+*.vcxproj.filters
+*.vcxproj.user
+*.vcxproj.cache
+*.pfx
+*.vsix
+*.appxsym
+
+# Visual Studio Solution User Options:
+*.sln.dotsettings
+*.sln.dotsettings.user
+.vs/
+
+# NuGet Packages:
+packages/
+
+# NuGet Temporary Files:
+*.nuget/
+nuget.config
+*.nupkg
+
+# JetBrains Rider
+.idea/
+*.iml
+
+# Code Analysis
+*.codeanalysis/
+
+# Tooling
+_Resharper.Caches/
+
+# OS junk files
+[Tt]humbs.db
+*.DS_Store
+
+# Other:
+*.log
+*.bak
+*.swp
+*.tmproj/
+*.*~
+*.orig
+*.sass-cache/
+.sass-cache/
+*.esproj.user
+
+# Publish folder
+publish/

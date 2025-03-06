@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DICOMAnonymizer.Core", "DICOMAnonymizer.Core\DICOMAnonymizer.Core.csproj", "{A120A451-CCC3-44C2-B4CE-5EB6F4BDC81F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DICOMAnonymizer.Application", "DICOMAnonymizer.Application\DICOMAnonymizer.Application.csproj", "{6C0D038B-AC3D-482A-8B60-A05F842A0A0A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DICOMAnonymizer.Infrastructure", "DICOMAnonymizer.Infrastructure\DICOMAnonymizer.Infrastructure.csproj", "{5573DEAD-5C38-4666-9A5A-3A4369B01095}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DICOMAnonymizer.CommandLine", "DICOMAnonymizer.CommandLine\DICOMAnonymizer.CommandLine.csproj", "{A3DF0312-245A-4C71-9AFB-FA50DA75186D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DICOMAnonymizer.Tests", "DICOMAnonymizer.Tests\DICOMAnonymizer.Tests.csproj", "{9A04F7C7-3953-4A3C-85F8-DA8EC41AEAEE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0600EED9-0F9E-4635-A19A-8539D472FE54}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A120A451-CCC3-44C2-B4CE-5EB6F4BDC81F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A120A451-CCC3-44C2-B4CE-5EB6F4BDC81F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A120A451-CCC3-44C2-B4CE-5EB6F4BDC81F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A120A451-CCC3-44C2-B4CE-5EB6F4BDC81F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C0D038B-AC3D-482A-8B60-A05F842A0A0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C0D038B-AC3D-482A-8B60-A05F842A0A0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C0D038B-AC3D-482A-8B60-A05F842A0A0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C0D038B-AC3D-482A-8B60-A05F842A0A0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5573DEAD-5C38-4666-9A5A-3A4369B01095}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5573DEAD-5C38-4666-9A5A-3A4369B01095}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5573DEAD-5C38-4666-9A5A-3A4369B01095}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5573DEAD-5C38-4666-9A5A-3A4369B01095}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3DF0312-245A-4C71-9AFB-FA50DA75186D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3DF0312-245A-4C71-9AFB-FA50DA75186D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3DF0312-245A-4C71-9AFB-FA50DA75186D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3DF0312-245A-4C71-9AFB-FA50DA75186D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A04F7C7-3953-4A3C-85F8-DA8EC41AEAEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A04F7C7-3953-4A3C-85F8-DA8EC41AEAEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A04F7C7-3953-4A3C-85F8-DA8EC41AEAEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A04F7C7-3953-4A3C-85F8-DA8EC41AEAEE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
