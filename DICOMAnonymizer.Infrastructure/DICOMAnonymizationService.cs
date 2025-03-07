@@ -69,10 +69,9 @@ public class DICOMAnonymizationService(ILogger<DICOMAnonymizationService> logger
 
                     if (dataset.Contains(dcmTag))
                     {
-                        DicomItem item = dataset.GetDicomItem<DicomItem>(dcmTag);
+                        var item = dataset.GetDicomItem<DicomItem>(dcmTag);
 
-                        // Skip tags with VRs that cannot be handled as strings
-                        if (item.ValueRepresentation == DicomVR.OB || item.ValueRepresentation == DicomVR.OW || item.ValueRepresentation == DicomVR.SQ)
+                        if (CheckIfCannotBeHandledAsStrings(item))
                         {
                             _logger.LogInformation("Skipping anonymization for tag {Tag} with VR {VR}", dcmTag, item.ValueRepresentation);
                             continue;
@@ -80,6 +79,7 @@ public class DICOMAnonymizationService(ILogger<DICOMAnonymizationService> logger
 
                         if (item is DicomElement element)
                         {
+                            // Decimal string or integer string
                             if (element.ValueRepresentation == DicomVR.DS || element.ValueRepresentation == DicomVR.IS)
                             {
                                 var originalValues = element.Get<string[]>() ?? [];
@@ -125,9 +125,6 @@ public class DICOMAnonymizationService(ILogger<DICOMAnonymizationService> logger
 
             // Step 2: Process unmapped tags
             RemoveUnmappedTags(dataset);
-
-            // Step 3:  Ensure required attributes are present (Post-processing)
-            EnsureRequiredAttributes(dataset);
         }
         catch (Exception ex)
         {
@@ -137,30 +134,6 @@ public class DICOMAnonymizationService(ILogger<DICOMAnonymizationService> logger
 
     private void RemoveUnmappedTags(DicomDataset dataset)
     {
-        var essentialTags = new List<string>
-        {
-            "00080016", // SOP Class UID
-            "00080018", // SOP Instance UID
-            "00020010", // Transfer Syntax UID
-            "00020002", // Media Storage SOP Class UID
-            "00020003",  // Media Storage SOP Instance UID
-            "00080060", // Modality - Example Required Tag
-            "00280004"  // Photometric Interpretation - Example Required Tag
-        };
-
-        var allowedTags = new List<string>
-        {
-            // Add all tags that are required/allowed for the SOP Class here
-            // You need to consult the DICOM standard for the specific SOP Class
-            "00280010", // Rows
-            "00280011", // Columns
-            "00280100", // Bits Allocated
-            "00280101", // Bits Stored
-            "00280102", // High Bit
-            "00280103", // Pixel Representation
-            "7FE00010"  // Pixel Data
-        };
-
         var unmappedTags = dataset
             .Select(x => new DICOMCoreTag(x.Tag.Group.ToString("X4", CultureInfo.InvariantCulture),
                                           x.Tag.Element.ToString("X4", CultureInfo.InvariantCulture)))
@@ -168,48 +141,57 @@ public class DICOMAnonymizationService(ILogger<DICOMAnonymizationService> logger
 
         foreach (var tag in unmappedTags)
         {
-            var tagId = tag.Group + tag.Element;
-
-            // Skip essential tags
-            if (essentialTags.Contains(tagId.ToLowerInvariant()))
-            {
-                continue;
-            }
-
-            if (allowedTags.Contains(tagId.ToLowerInvariant()))
+            // Skip rules
+            if (_config.Rules.Any(rule => rule.Tag.Equals(tag)))
             {
                 continue;
             }
 
             var dcmTag = new DicomTag(Convert.ToUInt16(tag.Group, 16), Convert.ToUInt16(tag.Element, 16));
 
+            // Determine the Value Representation (VR) of the tag
+            if (!dataset.Contains(dcmTag))
+            {
+                continue;
+            }
+
+            var item = dataset.GetDicomItem<DicomItem>(dcmTag);
+            var vr = item.ValueRepresentation;
+
+            // Skip if VR cannot be handled as a string
+            if (CheckIfCannotBeHandledAsStrings(item))
+            {
+                _logger.LogWarning("Skipping replacement for tag {Tag} with VR {VR}", dcmTag, vr);
+                continue;
+            }
+
             // Set Patient Name to "DEFAULT NAME"
             if (tag.Group == "0010" && tag.Element == "0010")
             {
                 dataset.AddOrUpdate(dcmTag, "DEFAULT NAME");
+                continue;
             }
-            else if (tag.Group != "7FE0") // Do not remove Pixel Data
+
+            try
             {
-                dataset.Remove(dcmTag);
+                dataset.AddOrUpdate(dcmTag, "DEFAULT_VALUE");
+            }
+            catch (Exception)
+            {
+                // Swallow exception if default value cannot be added
             }
         }
     }
 
-    private void EnsureRequiredAttributes(DicomDataset dataset)
+    // Helper method to check if VR cannot be handled as a string
+    private static bool CheckIfCannotBeHandledAsStrings(DicomItem item)
     {
-        if (!dataset.Contains(DicomTag.Modality))
-        {
-            dataset.AddOrUpdate(DicomTag.Modality, "CR"); // Or "DX", etc.
-        }
-
-        if (!dataset.Contains(DicomTag.Manufacturer))
-        {
-            dataset.AddOrUpdate(DicomTag.Manufacturer, "Anonymized");
-        }
-
-        if (!dataset.Contains(DicomTag.PatientID))
-        {
-            dataset.AddOrUpdate(DicomTag.PatientID, "AnonymizedPatientID");
-        }
+        return item.ValueRepresentation == DicomVR.OB  // Other Byte
+            || item.ValueRepresentation == DicomVR.OW  // Other Word
+            || item.ValueRepresentation == DicomVR.SQ  // Sequence
+            || item.ValueRepresentation == DicomVR.UN  // Unknown
+            || item.ValueRepresentation == DicomVR.OF  // Other Float
+            || item.ValueRepresentation == DicomVR.UT; // Unlimited Text (may be too large)
     }
+
 }

@@ -37,5 +37,15 @@ public class AnonymizationConfiguration
         Rules.Add(new KeepOriginalValueRule(new DICOMCoreTag("7FE0", "0010"))); // Pixel Data
         Rules.Add(new KeepOriginalValueRule(new DICOMCoreTag("0008", "0016"))); // SOP Class UID
         Rules.Add(new KeepOriginalValueRule(new DICOMCoreTag("0008", "0018"))); // SOP Instance UID
+
+        // Other
+        Rules.Add(new KeepOriginalValueRule(new DICOMCoreTag("0028", "0004"))); // Photometric Interpretation
+        Rules.Add(new KeepOriginalValueRule(new DICOMCoreTag("0028", "0101"))); // Bits Stored
+        Rules.Add(new KeepOriginalValueRule(new DICOMCoreTag("0028", "0102"))); // High Bit
+        Rules.Add(new KeepOriginalValueRule(new DICOMCoreTag("0002", "0002"))); // Media Storage SOP Class UID
+        Rules.Add(new KeepOriginalValueRule(new DICOMCoreTag("0002", "0003"))); // Media Storage SOP Instance UID
+        Rules.Add(new KeepOriginalValueRule(new DICOMCoreTag("0002", "0010"))); // Transfer Syntax UID
+        Rules.Add(new KeepOriginalValueRule(new DICOMCoreTag("0008", "0016"))); // SOP Class UID
+        Rules.Add(new KeepOriginalValueRule(new DICOMCoreTag("0008", "0018"))); // SOP Instance UID
     }
 }
